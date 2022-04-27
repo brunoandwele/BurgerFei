@@ -1,0 +1,2 @@
+ 5 -            X-salada -     Preco unitario: 10.00   Valor:   + 50.00
+ 2 -    Salada de frutas -     Preco unitario:  5.50   Valor:   + 11.00

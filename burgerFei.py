@@ -5,7 +5,6 @@ def br(linhas=1): #Funçãp para inserir quebras de linhas!
 ########################################################################################################################
 #Funções que envolvem o cadastro dos usuários!
 
-
 #####################################################################################################
 #Função para pedir novo pedido
 
@@ -112,14 +111,15 @@ def novoPedido(): #Função para criar um cadastro - será chamada dentro da fun
 
     cadastro.close() #Fechar o arquivo
 
-    valor_conta = menuPedido(cpf,valor_conta) #Chama a função menuPedido(cpf) para que seja criado um carrinho novo com o cpf da pessoa de e ainda adicione pedidos nele!! E depois retorna o valor total da conta da pessoa!
+    menuPedido(cpf)
+    #valor_conta = menuPedido(cpf,valor_conta) #Chama a função menuPedido(cpf) para que seja criado um carrinho novo com o cpf da pessoa de e ainda adicione pedidos nele!! E depois retorna o valor total da conta da pessoa!
 
     return nome,cpf#valor_conta #retorna ao main o valor do nome, cpf e do valor da conta
 
 #-----------------------------------------------------------------------------------------------------------------------
 
 #Login de antigos clientes
-def inserePedido(valor_conta): #Ele irá tentar fazer o login do cliente, se não tiver o cadastro ele perguntará se quer cadastrar
+def inserePedido(): #Ele irá tentar fazer o login do cliente, se não tiver o cadastro ele perguntará se quer cadastrar
 
     print('Faça o login! Informe seu CPF e sua senha: \n') #Informa que irá prosseguir para o login
 
@@ -147,13 +147,13 @@ def inserePedido(valor_conta): #Ele irá tentar fazer o login do cliente, se nã
 
             if senha == data[index_senha]: #Verifica se a senha digitada está associada ao CPF e se está correta
                 print('Login realizado com sucesso!') #Avisa que o login foi realizado com sucesso
-                valor_conta = valor_conta + menuPedido()
+                #valor_conta = valor_conta + menuPedido()
                 break #Para o loop
                 
             else:
                 print("Senha incorreta! Tente novamente") #Diz que a senha está incorreta e informa que precisará dizer novamente qual que é 
 
-        return nome,cpf, valor_conta #Retorna para função principal o nome, cpf e o valor da conta atualizada
+        return nome,cpf# valor_conta #Retorna para função principal o nome, cpf e o valor da conta atualizada
 
     else: #Caso o CPF não esteja no arquivo de cadastros - irá informar que o cliente precisa realizar cadastro!
 
@@ -183,6 +183,6 @@ def inserePedido(valor_conta): #Ele irá tentar fazer o login do cliente, se nã
 ########################################################################################################################
 ########################################################################################################################
 def main():
-    nome,cpf,valor_conta = novoPedido() #Chama a função novo pedido e retorna o valor do nome,cpf e conta atualizada
-    nome,cpf,valor_conta = inserePedido()#Chama a função inserePedido e retorna os valores do nome, cpf e conta atualiada
+    nome,cpf = novoPedido() #Chama a função novo pedido e retorna o valor do nome,cpf e conta atualizada
+    nome,cpf = inserePedido()#Chama a função inserePedido e retorna os valores do nome, cpf e conta atualiada
 main()
