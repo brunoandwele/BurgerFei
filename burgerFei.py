@@ -1,11 +1,11 @@
 def br(linhas=1): #Funçãp para inserir quebras de linhas!
     for i in range(linhas):
         print()
-########################################################################################################################
-########################################################################################################################
+###############################################
+###############################################
 #Funções que envolvem o cadastro dos usuários!
 
-#####################################################################################################
+#----------------------------------------------
 #Função para pedir novo pedido
 
 #Função para chamar o menu e adicionar itens no carrinho do cliente;
@@ -95,7 +95,7 @@ def menuPedido(cpf): #Função para criar um novo novoPedido que possui como arg
 
     #return valor_conta #Retorna para o main() a quantidade total que o cliente terá que pagar! Para que futuramente saia no extrato
 
-#-------------------------------------------------------------
+#----------------------------------------------
 #Função para um novo pedido
 def novoPedido(): #Função para criar um cadastro - será chamada dentro da função "novoPedido_1()"
     nome = input('Digite seu nome completo:\n') #Coletar o nome do usuário
@@ -116,7 +116,7 @@ def novoPedido(): #Função para criar um cadastro - será chamada dentro da fun
 
     return nome,cpf#valor_conta #retorna ao main o valor do nome, cpf e do valor da conta
 
-#-----------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------
 
 #Login de antigos clientes
 def inserePedido(): #Ele irá tentar fazer o login do cliente, se não tiver o cadastro ele perguntará se quer cadastrar
@@ -171,17 +171,20 @@ def inserePedido(): #Ele irá tentar fazer o login do cliente, se não tiver o c
                 print('Valor inválido!  \n 0 - Não \n 1 - Sim \n') #Se ele não colcoar nem 0 nem 1, ele continuará perguntando até um desses caracteres serem digitados.
 
 
-#-----------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------
 
 
 
 
 
 
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
+
+###############################################
+###############################################
+###############################################
+###############################################
+###############################################
+
 def main():
     nome,cpf = novoPedido() #Chama a função novo pedido e retorna o valor do nome,cpf e conta atualizada
     nome,cpf = inserePedido()#Chama a função inserePedido e retorna os valores do nome, cpf e conta atualiada
