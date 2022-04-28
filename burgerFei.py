@@ -1,6 +1,21 @@
 def br(linhas=1): #Funçãp para inserir quebras de linhas!
     for i in range(linhas):
         print()
+
+###############################################
+###############################################
+
+def insereLinha(arquivo,elemento,linha): #Função para inserir arquivos em uma linha especifica,precisa fechar o arquivo antes se ele já estiver aberto antes e abri-lo de novo depois!
+    #----------------
+    abrindoArquivo = open('{}.txt' .format(arquivo.strip('\n')), 'r')
+    arquivoLinhas = abrindoArquivo.readlines()
+    abrindoArquivo.close()
+    #----------------
+    arquivoLinhas.insert(linha, (str(elemento) + "\n"))
+    abrindoArquivo = open('{}.txt' .format(arquivo.strip('\n')), 'w')
+    abrindoArquivo.writelines(arquivoLinhas)
+    abrindoArquivo.close()
+
 ###############################################
 ###############################################
 #Funções que envolvem o cadastro dos usuários!
@@ -10,14 +25,14 @@ def br(linhas=1): #Funçãp para inserir quebras de linhas!
 
 #Função para chamar o menu e adicionar itens no carrinho do cliente;
 
-def menuPedido(cpf,conta_pagar,verificaConta): #Função para criar um novo novoPedido que possui como argumento a string do cpf do cliente
+def menuPedido(cpf): #Função para criar um novo novoPedido que possui como argumento a string do cpf do cliente
     br()#Quebra de linha
 
     cpf = cpf.strip('\n') #Realiza o strip da string do cpf, tirando o \n que veio após ser tirado do arquivo, para então poder associar ao nome do arquivo que será o carrinho do cliente
 
-    carrinho = open('{}.txt' .format(cpf),'a') #Cria ou edita o arquivo que é o carrinho do cliente!
+    carrinho = open('{}.txt' .format(cpf),'a') #Cria ou edita o arquivo que é o carrinho do cliente
 
-
+    
     #Fiz uma matriz para representar o cardápio do burgerFei
     cardapio = [
         ['Código','Produto', 'Preço'],
@@ -63,6 +78,7 @@ def menuPedido(cpf,conta_pagar,verificaConta): #Função para criar um novo novo
 
             #Quantidade TOTAL de TODOS produtos ADICIONADOS + valor TOTAL ADICIONADO
             quantidade_total = quantidade_total + quantidade #Soma com a variável quantidade_total o valor da quantidade adicionada, somente para depois poder informar o usuário sobre quantos itens foram inseridos no carrinho
+
             valor_total_adicionado = valor_total_adicionado + valor_total_produto #Variável para informar quantos reais serão adicionados no carrinho após fechar ele!!! 
 
 
@@ -93,36 +109,6 @@ def menuPedido(cpf,conta_pagar,verificaConta): #Função para criar um novo novo
         else: #Caso o cliente informe algum valor que não seja válido no input, ele informa que o que foi inserido é invalido e pede novamente para inserir um novo valor!
             print('Insira um valor válido!')
 
-
-    #Aqui será atualizado o valor da conta e adicionado no arquivo do carrinho do cliente
-    conta = open('{}.txt' .format(cpf),'r') #Abrindo o arquivo no modo leitura para poder pegar as linhas e transformar em lista com o readlines
-
-    # Atualiza o valor da conta a se pagar do cliente
-    conta_pagar = int(conta_pagar.strip('\n'))
-    conta_pagar = conta_pagar + valor_total_adicionado
-
-
-    atualizandoConta = conta.readlines() #Transformando o arquivo em lista e associando à atualizandoConta
-    conta_pagar = str(conta_pagar) + '\n'
-
-    #Adiciona na lista vendo se é a primeira vez adicionando ou se já existia antes
-    if verificaConta == 0:
-        atualizandoConta.insert(0,conta_pagar) #inserindo na lista na posição 0 o valor da conta caso ela não existisse
-        verificaConta = 1
-    else:
-        atualizandoConta[0] = conta_pagar #Substitui o valor da conta que já está no arquivo!
-
-    conta.close() #Fechando o arquivo no modo leitura para poder trabalhar depois no modo write
-
-    carrinho = open('{}.txt' .format(cpf),'w') #abrindo o arquivo no modo write
-
-    #Adicionando a lista agora com o valor da conta atualizado, sobreescrevendo todo o arquivo anterior
-    for element in atualizandoConta:
-        carrinho.write(str(element))
-
-    carrinho.close() #Fechando o arquivo
-
-    return conta_pagar, verificaConta #retorna para a função novoPedido() o valor da conta a se pagar atualizado, para que nas próximas partes seja mais facil de acessar!
 #----------------------------------------------
 #Função para um novo pedido
 def novoPedido(): #Função para criar um cadastro - será chamada dentro da função "novoPedido_1()"
@@ -130,25 +116,68 @@ def novoPedido(): #Função para criar um cadastro - será chamada dentro da fun
     cpf = input('Digite seu CPF (apenas dígitos):\n') #Coletar o cpf do usuário
     senha = input('Digite sua nova senha:\n') #Coletar a senha do usuário
 
-    conta_pagar = '0\n' #Cria a variável contendo o valor de quanto o cliente terá que pagar, será usada futuramente para adicionar os produtos que serão adicionados no carrinho
-
-    verificaConta = 0
-
     cadastro = open('cadastro.txt','a') # Cria ou Abre o arquivo com todos os cadastros e adiciona um novo
 
-    cadastro.write('%s\n%s\n%s\n%s\n' %(cpf, senha, nome, conta_pagar)) #Escrever no arquivo o CPF, a senha e o nome respectivamente do novo usuário
+    cadastro.write('%s\n%s\n%s\n' %(cpf, senha, nome)) #Escrever no arquivo o CPF, a senha e o nome respectivamente do novo usuário
     cadastro.write('\n') #Para acrescentar uma quebra de linha entre o cadastro de cada usuário
 
-    cadastro.close() #Fechar o arquivo
+    cadastro.close()
 
-    conta_pagar,verificaConta = menuPedido(cpf,conta_pagar,verificaConta)
+    menuPedido(cpf)
 
-    return nome,cpf,conta_pagar,verificaConta #Retorna para o main os valores do nome, do cpf e da conta.
+    return nome,cpf #Retorna para o main os valores do nome, do cpf e da conta.
+
+#----------------------------------------------
+#Função para remover pedido
+import os
+def cancelaPedido():
+    while True:
+        deletar = input('Gostaria de cancelar o seu pedido? \nEstá ação não poderá ser desfeita! \nNão - "0"\nSim - "1"\n "voltar" - Para voltar\n\nDigite sua opção aqui:')
+        
+        if deletar == '1':
+            
+            cadastro = open('cadastro.txt','r') #Abre o arquivo com os cadastros
+
+            data = cadastro.readlines() #Adiciona à "data" todos os valores de cadastros (adiciona em forma de lista - 1 linha = 1 elemento da lista)
+
+            cadastro.close() #Fecha o arquivo dos cadastros
+            while True:
+                cpf = input('Digite seu CPF (apenas dígitos):\n') + '\n' #pergunta o cpf do usuário  e logo depois verifica se tem no arquivo - OBS: é adicionado o "\n" pois ao usar o readlines() as informações são passadas com o \n
+            
+                if cpf in data: #Verifica se o usuário já está cadastrado ou não, se estiver irá perguntar a senha se não irá cadastrar ele
+
+                    index_cpf = data.index(cpf) #Pega o valor do índice do cpf na lista pois a senha fica 1 indece à frente
+
+                    index_senha = index_cpf + 1 #Adiciona 1 ao valor do indice do cpf, pois se refere ao indice da senha
+
+
+                    while True: #Loop até o cliente acertar a senha
+
+                        senha = input('Digite sua senha:\n') + '\n' #OBS: é adicionado o "\n" pois ao usar o readlines() as informações são passadas com o \n
+
+                        if senha == data[index_senha]: #Verifica se a senha digitada está associada ao CPF e se está correta
+                            os.remove("{}.txt" .format(cpf.strip('\n')))
+                            print("Pedido cancelado com sucesso! Obrigado!")
+                            break #Para o loop da senha
+                            
+                        else:
+                            print("Senha incorreta! Tente novamente") #Diz que a senha está incorreta e informa que precisará dizer novamente qual que é 
+                    break #Para o loop de fora
+
+                else:
+                    print('CPF digitado incorretamente ou não cadastrado \nCaso acredite que ele nã esteja cadastrado, digite "voltar" para voltar ao menu!')
+
+        elif opcao == 'voltar':
+            break       
+
+        elif deletar !='1' and deletar != '0' and opcao != 'sair':
+            print('Digite um valor válido!')
+
 
 #----------------------------------------------
 
-#Login de antigos clientes
-def inserePedido(conta_pagar,verificaConta): #Ele irá tentar fazer o login do cliente, se não tiver o cadastro ele perguntará se quer cadastrar.Além de que recebe como argumento a conta_pagar pois ela irá chamar novamente a funçãp menuPedido(), a qual precisa do valor da conta para que ela seja atualizada
+#Função para inserir pedidos
+def inserePedido(): #Ele irá tentar fazer o login do cliente, se não tiver o cadastro ele perguntará se quer cadastrar.Além de que recebe como argumento a conta_pagar pois ela irá chamar novamente a funçãp menuPedido(), a qual precisa do valor da conta para que ela seja atualizada
 
     print('Faça o login! Informe seu CPF e sua senha: \n') #Informa que irá prosseguir para o login
 
@@ -176,7 +205,7 @@ def inserePedido(conta_pagar,verificaConta): #Ele irá tentar fazer o login do c
 
             if senha == data[index_senha]: #Verifica se a senha digitada está associada ao CPF e se está correta
                 print('Login realizado com sucesso!') #Avisa que o login foi realizado com sucesso
-                conta_pagar = menuPedido(cpf,conta_pagar,verificaConta)
+                menuPedido(cpf)
                 break #Para o loop
                 
             else:
@@ -192,12 +221,12 @@ def inserePedido(conta_pagar,verificaConta): #Ele irá tentar fazer o login do c
                 print('Ok!')
                 break
             elif realizar_cadastro == '1': #Se ele aceitar, a função de cadastro "novoPedido()" será chamada
-                nome,cpf,conta_pagar,verificaConta = NovoPedido() #Chama a função e retorna os valores de nome,cpf e conta_pagar
+                nome,cpf = NovoPedido() #Chama a função e retorna os valores de nome,cpf e conta_pagar
                 break
             else:
                 print('Valor inválido!  \n 0 - Não \n 1 - Sim \n') #Se ele não colcoar nem 0 nem 1, ele continuará perguntando até um desses caracteres serem digitados.
 
-    return nome,cpf,conta_pagar #Retorna para o main os valores do nome, cpf e valor_conta (por mais que já se tenham esses valores do cpf e nom no main, pode ser que o cliente venha direto para essa função...)
+    return nome,cpf #Retorna para o main os valores do nome, cpf e valor_conta (por mais que já se tenham esses valores do cpf e nom no main, pode ser que o cliente venha direto para essa função...)
 
 #----------------------------------------------
 
@@ -214,11 +243,19 @@ def inserePedido(conta_pagar,verificaConta): #Ele irá tentar fazer o login do c
 ###############################################
 
 def main():
-    nome,cpf,conta_pagar,verificaConta = novoPedido() #Chama a função novo pedido e retorna o valor do nome,cpf e conta atualizada
-    nome,cpf,conta_pagar = inserePedido(conta_pagar,verificaConta)#Chama a função inserePedido e retorna os valores do nome, cpf e conta atualiada
+    while True:
+        opcao = input('1 - Novo Pedido \n2 - Cancela Pedido \n3 - Insere produto \n4 - Cancela Produto \n5 - Valor do pedido \n6 - Extrato \n\n0 - Sair \nDigite sua opção:')
 
-    print(nome)
-    print(cpf)
-    print(conta_pagar)
-    print(verificaConta)
+        if opcao == '1':
+            nome,cpf = novoPedido() #Chama a função novo pedido e retorna o valor do nome,cpf e conta atualizada
+        elif opcao == '2':
+            cancelaPedido()
+        elif opcao == '3':
+            nome,cpf = inserePedido()#Chama a função inserePedido e retorna os valores do nome, cpf e conta atualiada
+        elif opcao == '0':
+            break
+        else:
+            print('Insira uma opção válida')
+
+
 main()
