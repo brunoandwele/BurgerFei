@@ -1,4 +1,4 @@
-from br import br
+from funcoes.br import br
 
 def menuPedido(cpf): #Função para criar um novo novoPedido que possui como argumento a string do cpf do cliente
     br()#Quebra de linha

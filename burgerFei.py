@@ -1,15 +1,15 @@
 ###############################################
 ###############################################
 #Função para um novo pedido
-from novoPedido import novoPedido
+from funcoes.novoPedido import novoPedido
 
 #----------------------------------------------
 #Função para remover pedido
-from cancelaPedido import cancelaPedido
+from funcoes.cancelaPedido import cancelaPedido
 
 #----------------------------------------------
 #Função para inserir pedidos
-from inserePedido import inserePedido
+from funcoes.inserePedido import inserePedido
 
 #----------------------------------------------
 #Função principal

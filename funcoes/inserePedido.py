@@ -1,6 +1,6 @@
-from menuPedido import menuPedido
+from funcoes.menuPedido import menuPedido
 
-from novoPedido import novoPedido
+from funcoes.novoPedido import novoPedido
 
 def inserePedido(): #Ele irá tentar fazer o login do cliente, se não tiver o cadastro ele perguntará se quer cadastrar.Além de que recebe como argumento a conta_pagar pois ela irá chamar novamente a funçãp menuPedido(), a qual precisa do valor da conta para que ela seja atualizada
 

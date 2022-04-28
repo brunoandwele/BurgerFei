@@ -1,4 +1,4 @@
-from menuPedido import menuPedido
+from funcoes.menuPedido import menuPedido
 
 def novoPedido(): #Função para criar um cadastro - será chamada dentro da função "novoPedido_1()"
     nome = input('Digite seu nome completo:\n') #Coletar o nome do usuário
