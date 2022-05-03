@@ -14,7 +14,7 @@ def cancelaPedido():
             while True:
                 cpf = input('Digite seu CPF (apenas dígitos):\n') + '\n' #pergunta o cpf do usuário  e logo depois verifica se tem no arquivo - OBS: é adicionado o "\n" pois ao usar o readlines() as informações são passadas com o \n
             
-                if cpf in data: #Verifica se o usuário já está cadastrado ou não, se estiver irá perguntar a senha se não irá cadastrar ele
+                if cpf in data: #Verifica se o usuário já está cadastrado ou não, se estiver irá perguntar a senha
 
                     index_cpf = data.index(cpf) #Pega o valor do índice do cpf na lista pois a senha fica 1 indece à frente
 
@@ -35,11 +35,11 @@ def cancelaPedido():
                     break #Para o loop de fora
 
                 else:
-                    print('CPF digitado incorretamente ou não cadastrado \nCaso acredite que ele nã esteja cadastrado, digite "voltar" para voltar ao menu!')
+                    print('CPF digitado incorretamente ou não cadastrado \nCaso acredite que ele não esteja cadastrado, digite "voltar" para voltar ao menu!')
 
         elif deletar == 'voltar':
             break       
 
-        elif deletar !='1' and deletar != '0' and deletar != 'sair':
+        elif deletar !='1' and deletar != '0' and deletar != 'voltar':
             print('Digite um valor válido!')
 

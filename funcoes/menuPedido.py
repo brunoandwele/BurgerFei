@@ -3,6 +3,16 @@ from funcoes.br import br
 def menuPedido(cpf): #Função para criar um novo novoPedido que possui como argumento a string do cpf do cliente
     br()#Quebra de linha
 
+    #processo para pegar o valor da conta do usuário
+    cadastro = open('cadastro.txt','r') #Abre o cadastro novamente par apoder acessar o valor da conta
+    cadastro_linhas = cadastro.readlines() #Define o "cadastro_linhas" como uma lista das linhas do cadastro
+    cadastro.close()
+    index_cpf = cadastro_linhas.index(cpf + '\n') #pega o indice do cpf que já estará lá
+    index_conta = index_cpf + 3 #pega o indice da conta, que é 3 unidades a mais do que o do cpf
+    index_quantidades = index_cpf + 4 #Pega a lista com as quantidades de produtos
+    conta = float(cadastro_linhas[index_conta].strip("\n")) #tira o \n e transforma a conta em float
+    quantidades = (cadastro_linhas[index_quantidades].strip('\n')).split(' ') #Transforma
+
     cpf = cpf.strip('\n') #Realiza o strip da string do cpf, tirando o \n que veio após ser tirado do arquivo, para então poder associar ao nome do arquivo que será o carrinho do cliente
 
     carrinho = open('{}.txt' .format(cpf),'a') #Cria ou edita o arquivo que é o carrinho do cliente
@@ -19,7 +29,7 @@ def menuPedido(cpf): #Função para criar um novo novoPedido que possui como arg
         ['6', 'Refrigerante', 'R$ 4,50'],
         ['7', 'Suco natural', 'R$ 6,25']
     ]
-    valores = [0, 10, 10, 7.5, 8, 5.5, 4.5, 6.25] #Lista contendo os valores em reais dos produtos, para que futuramente seja calculado o preço total a se pagar!
+    valores = ['-', 10, 10, 7.5, 8, 5.5, 4.5, 6.25] #Lista contendo os valores em reais dos produtos, para que futuramente seja calculado o preço total a se pagar!
 
     quantidade_total = 0 #Varíavel que será usada para indicar quantos itens novos foram adicionados ao carrinho
 
@@ -46,19 +56,18 @@ def menuPedido(cpf): #Função para criar um novo novoPedido que possui como arg
 
             valor_produto = valores[int(pedido)] #Pegar o valor do produto escolhido a partir da lista contendo os valores dos produtos, sendo que o índice na lista se refere ao código do alimento no cardápio
 
-            quantidade = int(input('Quantidade a ser adicionada no carrinho: \n')) #Pergunta quantos itens do alimento desejado deverá ser adicionado no carrinho
+            quantidade_escolhida = int(input('Quantidade a ser adicionada no carrinho: \n')) #Pergunta quantos itens do alimento desejado deverá ser adicionado no carrinho
+
+            quantidades[int(pedido)] = int(quantidades[int(pedido)]) + quantidade_escolhida #Atualiza a quantidade do produto adicionado na lista quantidade!
 
             #Valor total de um único produto adicionado no arrinho
-            valor_total_produto = valor_produto * quantidade #Aqui está sendo calculado o valor total que será acrescentado no carrinho, em que pegamos o valor do produto e multiplicamos pela quantidade que será inserida no carrinho
+            valor_total_produto = valor_produto * quantidade_escolhida #Aqui está sendo calculado o valor total que será acrescentado no carrinho, em que pegamos o valor do produto e multiplicamos pela quantidade que será inserida no carrinho
 
-            #Quantidade TOTAL de TODOS produtos ADICIONADOS + valor TOTAL ADICIONADO
-            quantidade_total = quantidade_total + quantidade #Soma com a variável quantidade_total o valor da quantidade adicionada, somente para depois poder informar o usuário sobre quantos itens foram inseridos no carrinho
-
-            valor_total_adicionado = valor_total_adicionado + valor_total_produto #Variável para informar quantos reais serão adicionados no carrinho após fechar ele!!! 
+            conta += valor_total_produto #Atualiza o valor da conta
 
 
             #Usei vários write para que se tenha a formatação correta 
-            carrinho.write('%2i' %quantidade)
+            carrinho.write('%2i' %quantidade_escolhida)
             carrinho.write('%2s' %('-'))
             carrinho.write('%20s' %produto)
             carrinho.write('%2s' %('-'))
@@ -73,13 +82,28 @@ def menuPedido(cpf): #Função para criar um novo novoPedido que possui como arg
 
         elif pedido == '0': #Se o cliente declarar "0" como resposta do input, significa que ele não quer adicionar mais nada no carrinho
 
-            #Informa que o carrinho foi fechado e informa também quantos produtos foram adicionados e o valor em reais total
-            print('Carrinho fechado com sucesso!\nForam adicionados %i produto(s) ao carrinho!' %quantidade_total)
-            print('Totalizando um total de R$ %.2f adicionados na conta!' %valor_total_adicionado)
-
             carrinho.close() #Fecha o arquivo do carrinho
 
             break #Quebra o loop que adiciona pedidos ao carrinho
 
         else: #Caso o cliente informe algum valor que não seja válido no input, ele informa que o que foi inserido é invalido e pede novamente para inserir um novo valor!
             print('Insira um valor válido!')
+
+
+        #Transforma em string novamente a lista qunatidades
+        quantidades_string = ''
+        for elemento in quantidades:
+            quantidades_string += str(elemento) + ' '
+        
+
+        cadastro_linhas[index_conta] = str(conta) + '\n' #Volta a conta para o tipo string e com o \n na lista do cadastro
+        cadastro_linhas[index_quantidades] = quantidades_string + '\n' #Adiciona com \n na lista do cadastro
+
+
+        cadastro_update = open('cadastro.txt','w') 
+        #Reescreve o arquivo inteiro mas com o valor da conta atualizado
+        for elemento in cadastro_linhas:
+            cadastro_update.write(elemento)
+
+        cadastro_update.close()
+

@@ -12,23 +12,19 @@ def inserePedido(): #Ele irá tentar fazer o login do cliente, se não tiver o c
 
     cadastro.close() #Fecha o arquivo dos cadastros
 
-    cpf = input('Digite seu CPF (apenas dígitos):\n') + '\n' #pergunta o cpf do usuário  e logo depois verifica se tem no arquivo - OBS: é adicionado o "\n" pois ao usar o readlines() as informações são passadas com o \n
+    cpf = input('Digite seu CPF (apenas dígitos):\n') #pergunta o cpf do usuário  e logo depois verifica se tem no arquivo
 
-    if cpf in data: #Verifica se o usuário já está cadastrado ou não, se estiver irá perguntar a senha se não irá cadastrar ele
+    if (cpf + '\n') in data: #Verifica se o usuário já está cadastrado ou não, se estiver irá perguntar a senha se não irá cadastrar ele
 
-        index_cpf = data.index(cpf) #Pega o valor do índice do cpf na lista pois a senha fica 1 indece à frente
+        index_cpf = data.index(cpf + '\n') #Pega o valor do índice do cpf na lista pois a senha fica 1 indece à frente
 
         index_senha = index_cpf + 1 #Adiciona 1 ao valor do indice do cpf, pois se refere ao indice da senha
 
-        index_nome = index_cpf + 2 #Adiciona 2 ao valor do índice do cpf, pois se refere ao indice do nome que é dois a frente do cpf
-
-        nome = data[index_nome] #atribui um valor à variável "nome", pois mais para frente irei retornar ela ao main()
-
         while True: #Loop até o cliente acertar a senha
 
-            senha = input('Digite sua senha:\n') + '\n' #OBS: é adicionado o "\n" pois ao usar o readlines() as informações são passadas com o \n
+            senha = input('Digite sua senha:\n') #OBS: é adicionado o "\n" pois ao usar o readlines() as informações são passadas com o \n
 
-            if senha == data[index_senha]: #Verifica se a senha digitada está associada ao CPF e se está correta
+            if (senha + '\n') == data[index_senha]: #Verifica se a senha digitada está associada ao CPF e se está correta
                 print('Login realizado com sucesso!') #Avisa que o login foi realizado com sucesso
                 menuPedido(cpf)
                 break #Para o loop
@@ -46,8 +42,9 @@ def inserePedido(): #Ele irá tentar fazer o login do cliente, se não tiver o c
                 print('Ok!')
                 break
             elif realizar_cadastro == '1': #Se ele aceitar, a função de cadastro "novoPedido()" será chamada
-                NovoPedido() #Chama a função e retorna os valores de nome,cpf e conta_pagar
+                novoPedido() #Chama a função novoPedido
                 break
             else:
                 print('Valor inválido!  \n 0 - Não \n 1 - Sim \n') #Se ele não colcoar nem 0 nem 1, ele continuará perguntando até um desses caracteres serem digitados.
+
 
