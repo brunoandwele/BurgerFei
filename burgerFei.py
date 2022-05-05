@@ -5,6 +5,8 @@ from funcoes.novoPedido import novoPedido
 from funcoes.cancelaPedido import cancelaPedido
 #Função para inserir pedidos
 from funcoes.inserePedido import inserePedido
+#Função para remover produtos
+from funcoes.removerProduto import removerProduto
 
 
 #----------------------------------------------
@@ -19,6 +21,8 @@ def main():
             cancelaPedido()
         elif opcao == '3':
             inserePedido()#Chama a função inserePedido e retorna os valores do nome, cpf e conta atualiada
+        elif opcao == '4':
+            removerProduto()
         elif opcao == '0':
             break
         else:

@@ -30,10 +30,6 @@ def menuPedido(cpf): #Função para criar um novo novoPedido que possui como arg
         ['7', 'Suco natural', 'R$ 6,25']
     ]
     valores = ['-', 10, 10, 7.5, 8, 5.5, 4.5, 6.25] #Lista contendo os valores em reais dos produtos, para que futuramente seja calculado o preço total a se pagar!
-
-    quantidade_total = 0 #Varíavel que será usada para indicar quantos itens novos foram adicionados ao carrinho
-
-    valor_total_adicionado = 0 #Varíavel que será usada para indicar qual o valor total em reais de todos os produtos adicionados no carrinho.
     
     while True:
 
@@ -75,7 +71,8 @@ def menuPedido(cpf): #Função para criar um novo novoPedido que possui como arg
             carrinho.write('%6.2f' %valor_produto)
             carrinho.write('%10s' %('Valor: '))
             carrinho.write('%3s' %('+'))
-            carrinho.write('%6.2f\n' %valor_total_produto)
+            carrinho.write('%6.2f' %valor_total_produto)
+            carrinho.write('%10s\n' %('Código: %s' %(pedido)))
 
             
 

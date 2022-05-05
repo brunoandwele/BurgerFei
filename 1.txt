@@ -1,0 +1,5 @@
+ 2 -            X-salada -     Preco unitario: 10.00   Valor:   + 20.00 Código: 1
+ 1 -            X-burger -     Preco unitario: 10.00   Valor:   + 10.00 Código: 2
+ 1 -            X-salada -     Preco unitario: 10.00   Valor:   + 10.00 Código: 1
+ 1 -     Cachorro quente -     Preco unitario:  7.50   Valor:   +  7.50 Código: 3
+ 1 -     Cachorro quente -     Preco unitario:  7.50   Valor:   -  7.50 Código: 3- Cancelado
