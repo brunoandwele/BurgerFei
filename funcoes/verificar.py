@@ -1,40 +1,53 @@
 from funcoes.br import br
+import os
 
 def verificacao():
-          br(10)
-          print('Faça o login! Informe seu CPF e sua senha: \n') #Informa que irá prosseguir para o login
-          br(5)
-          cadastro = open('cadastro.txt','r') #Abre o arquivo com os cadastros
+    clear = lambda: os.system('cls')
+    clear()
+    # Informa que irá prosseguir para o login
+    print('Faça o login! Informe seu CPF e sua senha: \n')
 
-          data = cadastro.readlines() #Adiciona à "data" todos os valores de cadastros (adiciona em forma de lista - 1 linha = 1 elemento da lista)
+    cadastro = open('cadastro.txt', 'r')  # Abre o arquivo com os cadastros
 
-          cadastro.close() #Fecha o arquivo dos cadastros
+    # Adiciona à "data" todos os valores de cadastros (adiciona em forma de lista - 1 linha = 1 elemento da lista)
+    data = cadastro.readlines()
 
-          cpf = input('Digite seu CPF (apenas dígitos):\n') #pergunta o cpf do usuário  e logo depois verifica se tem no arquivo
-          br(5)
+    cadastro.close()  # Fecha o arquivo dos cadastros
 
-          if (cpf + '\n') in data: #Verifica se o usuário já está cadastrado ou não, se estiver irá perguntar a senha se não irá cadastrar ele
+    # pergunta o cpf do usuário  e logo depois verifica se tem no arquivo
+    clear()
+    cpf = input('Digite seu CPF (apenas dígitos):\n')
 
-                    index_cpf = data.index(cpf + '\n') #Pega o valor do índice do cpf na lista pois a senha fica 1 indece à frente
+    if (cpf + '\n') in data:  # Verifica se o usuário já está cadastrado ou não, se estiver irá perguntar a senha se não irá cadastrar ele
 
-                    index_senha = index_cpf + 1 #Adiciona 1 ao valor do indice do cpf, pois se refere ao indice da senha
+        # Pega o valor do índice do cpf na lista pois a senha fica 1 indece à frente
+        index_cpf = data.index(cpf + '\n')
 
-                    while True: #Loop até o cliente acertar a senha
+        # Adiciona 1 ao valor do indice do cpf, pois se refere ao indice da senha
+        index_senha = index_cpf + 1
 
-                              senha = input('Digite sua senha:\n') #OBS: é adicionado o "\n" pois ao usar o readlines() as informações são passadas com o \n
-                              br(5)
+        clear()
+        while True:  # Loop até o cliente acertar a senha
+            # OBS: é adicionado o "\n" pois ao usar o readlines() as informações são passadas com o \n
+            senha = input('Digite sua senha:\n')
 
-                              if (senha + '\n') == data[index_senha]: #Verifica se a senha digitada está associada ao CPF e se está correta
-                                        print('Login realizado com sucesso!') #Avisa que o login foi realizado com sucesso
-                                        br(5)
-                                        return cpf,True
-                                        
-                              
-                              else:
-                                        print("Senha incorreta! Tente novamente") #Diz que a senha está incorreta e informa que precisará dizer novamente qual que é 
-                                        br(5)
-          else:
-                    print('CPF não encontrado no sistema!')
-                    br(5)
-                    cpf = 'null'
-                    return cpf,False
+            # Verifica se a senha digitada está associada ao CPF e se está correta
+            if (senha + '\n') == data[index_senha]:
+                # Avisa que o login foi realizado com sucesso
+                clear()
+                print('Login realizado com sucesso!')
+                br()
+                return cpf, True
+
+            else:
+                # Diz que a senha está incorreta e informa que precisará dizer novamente qual que é
+                clear()
+                print("Senha incorreta! Tente novamente")
+                br(1)
+                
+    else:
+        clear()
+        print('CPF não encontrado no sistema!')
+        br()
+        cpf = 'null'
+        return cpf, False
