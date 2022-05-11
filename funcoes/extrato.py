@@ -17,50 +17,54 @@ def extrato():
 
             if verificar_bool:
                 clear()
+                try :
+                    # Pegando valor do nome
+                    cadastro = open('cadastro.txt', 'r')
+                    cadastro_linhas = cadastro.readlines()
+                    cadastro.close()
+                    cpf_index = cadastro_linhas.index(cpf + '\n')
+                    nome = cadastro_linhas[cpf_index + 2].strip('\n')
 
-                # Pegando valor do nome
-                cadastro = open('cadastro.txt', 'r')
-                cadastro_linhas = cadastro.readlines()
-                cadastro.close()
-                cpf_index = cadastro_linhas.index(cpf + '\n')
-                nome = cadastro_linhas[cpf_index + 2].strip('\n')
+                    # Pegando valor da conta
+                    pedido = open('{}.txt' .format(cpf), 'r')
+                    pedido_linhas = pedido.readlines()
+                    pedido.close()
+                    conta = pedido_linhas[0].strip('\n')
 
-                # Pegando valor da conta
-                pedido = open('{}.txt' .format(cpf), 'r')
-                pedido_linhas = pedido.readlines()
-                pedido.close()
-                conta = pedido_linhas[0].strip('\n')
+                    # Pegando o histórico dos pedidos
+                    historico = []
+                    for i in range(2, len(pedido_linhas)):
+                        historico.append(pedido_linhas[i].strip('\n'))
 
-                # Pegando o histórico dos pedidos
-                historico = []
-                for i in range(2, len(pedido_linhas)):
-                    historico.append(pedido_linhas[i].strip('\n'))
+                    # Pegando a data
+                    data = datetime.now()
+                    data_formatada = data.strftime("%Y/%m/%d %H:%M")
 
-                # Pegando a data
-                data = datetime.now()
-                data_formatada = data.strftime("%Y/%m/%d %H:%M")
+                    # Imprimindo extrato:
+                    extratoFile = open('extrato_{}.txt' .format(cpf), 'w')
 
-                # Imprimindo extrato:
-                extratoFile = open('extrato_{}.txt' .format(cpf), 'w')
+                    extratoFile.write('Nome: %s\n' % nome)
+                    extratoFile.write('CPF: %s\n' % cpf)
+                    extratoFile.write('Total: R$ %s\n' % conta)
+                    extratoFile.write('Data: %s\n' % data_formatada)
+                    extratoFile.write('Itens do pedido:\n')
+                    for elemento in historico:
+                        extratoFile.write(elemento + '\n')
+                    extratoFile.close()
 
-                extratoFile.write('Nome: %s\n' % nome)
-                extratoFile.write('CPF: %s\n' % cpf)
-                extratoFile.write('Total: R$ %s\n' % conta)
-                extratoFile.write('Data: %s\n' % data_formatada)
-                extratoFile.write('Itens do pedido:\n')
-                for elemento in historico:
-                    extratoFile.write(elemento + '\n')
-                extratoFile.close()
+                    extratoFile = open('extrato_{}.txt' .format(cpf), 'r')
+                    extratoFile_ler = extratoFile.read()
 
-                extratoFile = open('extrato_{}.txt' .format(cpf), 'r')
-                extratoFile_ler = extratoFile.read()
-
-                clear()
-                print(extratoFile_ler)
-                br(1)
-                back = input('Aperte enter para voltar!')
-                clear()
-                break
+                    clear()
+                    print(extratoFile_ler)
+                    br(1)
+                    back = input('Aperte enter para voltar!')
+                    clear()
+                    break
+                except:
+                    clear()
+                    print('Não há registro de pedidos com esse cpf!')
+                    br(1)
 
             else:
                 clear()

@@ -17,7 +17,8 @@ def cancelaPedido():
 
             if verificacao_bool == True:
                 try:
-                    os.remove("{}.txt" .format(cpf.strip('\n')))
+                    os.remove("{}.txt" .format(cpf))
+                    os.remove("extrato_{}.txt" .format(cpf))
                     print("Pedido cancelado com sucesso! Obrigado!")
                     br()
                     break
