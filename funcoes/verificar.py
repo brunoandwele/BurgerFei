@@ -2,7 +2,7 @@ from funcoes.br import br
 import os
 
 def verificacao():
-    clear = lambda: os.system('cls')
+    clear = lambda: os.system('cls') #Cria a função para limpar o console
     clear()
     # Informa que irá prosseguir para o login
     print('Faça o login! Informe seu CPF e sua senha: \n')
@@ -37,7 +37,7 @@ def verificacao():
                 clear()
                 print('Login realizado com sucesso!')
                 br()
-                return cpf, True
+                return cpf, True #Retorna o cpf e True para informar que o login foi realizado com sucesso
 
             else:
                 # Diz que a senha está incorreta e informa que precisará dizer novamente qual que é
@@ -50,4 +50,4 @@ def verificacao():
         print('CPF não encontrado no sistema!')
         br()
         cpf = 'null'
-        return cpf, False
+        return cpf, False #retorna o cpf como null e False para informar que o login não foi feito com sucesso!

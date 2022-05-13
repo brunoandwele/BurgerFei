@@ -20,7 +20,7 @@ import os
 # ----------------------------------------------
 # Função principal
 def main():
-    clear = lambda: os.system('cls')
+    clear = lambda: os.system('cls') #Cria a função para limpar o console
     clear()
     # Apenas "abro" o arquivo cadastro para garantir que ele exista(Se existir nada acontecerá,caso não exista ele irá criar um arquivo vazio com o nome "cadastro.txt")
     cadastro = open('cadastro.txt', 'a')
@@ -46,7 +46,7 @@ def main():
             break
         else:
             clear()
-            print('Insira uma opção válida')
+            print('Insira uma opção válida') #Se digitar algum valor que não seja um desses, ele irá falar para inserir um valor válido;
             br(1)
 
 

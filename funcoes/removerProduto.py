@@ -4,14 +4,18 @@ import os
 
 
 def removerProduto():
-    clear = lambda: os.system('cls')
+    clear = lambda: os.system('cls') #Cria a função para limpar o console
     clear()
     print('Para remover um produto é necessário informar novamente o cpf e a senha!')
     br(1)
+    #Pergunta se ele quer mesmo remover um pedido, para que caso ele tenha entrado sem querer
     confirmar = input(
         'Gostaria mesmo de remover um produto? \n\nSim - "1" \n\nNão - "0" \n\nDigite aqui sua respsota:')
 
     if confirmar == '1':
+
+        #Para remover usei um método muito parecido com o de inserir produto e do novo pedido, por tanto para adicionar no carrinho que um pedido foi cancelado eu precisei do cardápio e da lista dos precos para poder adicionar no arquivo, já que eu me baseei totalemente nessas duas listas com seus elementos para fazer isso!
+
 
         cardapio = [
             ['Código', 'Produto', 'Preço'],
@@ -26,15 +30,16 @@ def removerProduto():
 
         # Lista contendo os valores em reais dos produtos, para que futuramente seja calculado o preço total a se pagar!
         valores = ['-', 10, 10, 7.5, 8, 5.5, 4.5, 6.25]
-        cpf, verificacao_bool = verificacao()
+
+        cpf, verificacao_bool = verificacao() #Verifica o login e retorna se foi relaizado com sucesso ou não e o valor do cpf do usuário
 
         if verificacao_bool == True:
 
-            try:
+            try: #Tenta abrir o pedido do usuário
                 carrinho = open('{}.txt' .format(cpf), 'r')
                 carrinho_linhas = carrinho.readlines()
-                conta = float(carrinho_linhas[0].strip('\n'))
-                quantidades = (carrinho_linhas[1].strip('\n')).split(' ')
+                conta = float(carrinho_linhas[0].strip('\n')) #Pega o valor da conta e transforma e float novamente tirando o \n
+                quantidades = (carrinho_linhas[1].strip('\n')).split(' ') #Pega o valor das quantidades e tira o \n e depois transforma em lista novamente
                 carrinho.close()
                 clear()
                 while True:
@@ -42,13 +47,15 @@ def removerProduto():
                     carrinho = open('{}.txt' .format(cpf), 'r')
                     carrinho_linhas = carrinho.readlines()
 
+                    #Imprime o carrinho do usuario sem mostrar as duas primeiras linhas, já que elas são os valores da conta e das quantidades
                     for i in range(2, len(carrinho_linhas)):
                         print(carrinho_linhas[i])
 
                     carrinho = open('{}.txt' .format(cpf), 'a')
 
+                    #Pergunta qual produto quer remover a partir do codigo, e caso a pessoa desista ela pode esrever "v" para voltar
                     produto = input(
-                        'Qual o produto que deseja remover?\nDigite o código dele!\nCaso queira voltar, digite "voltar" para voltar ao menu!\n: ')
+                        'Qual o produto que deseja remover?\nDigite o código dele!\nCaso queira voltar, digite "v" para voltar ao menu!\n\nDigite aqui sua resposta: ')
                     br(1)
 
                     # Verifica se a variável "produto" recebeu um desses valores
@@ -57,19 +64,20 @@ def removerProduto():
 
                         while True:
 
-                            # Pergunta quantos itens do alimento desejado deverá ser adicionado no carrinho
+                            # Pergunta quantos itens do alimento desejado deverá ser remover do carrinho
                             quantidade_escolhida = (input(
-                                'Digite a quantidade a ser removida do carrinho:\n(OBS:Caso queira voltar, digite "voltar")\n:'))
+                                'Digite a quantidade a ser removida do carrinho:\n(OBS:Caso queira voltar, digite "v")\n\nDigite aqui sua resposta: '))
                             br(1)
 
-                            if quantidade_escolhida == 'voltar':
+                            if quantidade_escolhida == 'v': #Se digitou V, ele voltará
                                 clear()
                                 print('Voltando')
                                 br()
                                 break
 
-                            else:
-
+                            else:#Caso contrário, irá atualizar o carrinho
+                                
+                                #Se o valor digitado é maior do que o valor dentro do carrinho, irá informar que a quantidade digitada é maior do que a dentro do carrinho
                                 if (int(quantidades[int(produto)]) - int(quantidade_escolhida)) < 0:
                                     clear()
                                     print(
@@ -78,65 +86,70 @@ def removerProduto():
                                     break
 
                                 else:
-                                    quantidades[int(produto)] = (
-                                        int(quantidades[int(produto)]) - int(quantidade_escolhida))
+                                    while True:
+                                        try:
+                                            quantidades[int(produto)] = (
+                                                int(quantidades[int(produto)]) - int(quantidade_escolhida))
 
-                                    # Cria uma variável chamada "produto" que assume um valor do item que será adicionado diretamente da matriz "cardapio", essa variável será usada para pegar o nome do produto para depois usar no extrarto e deixar no carrinho também
-                                    produto_remover = (cardapio[int(produto)][1])
+                                            # Cria uma variável chamada "produto" que assume um valor do item que será removido diretamente da matriz "cardapio", essa variável será usada para pegar o nome do produto para depois usar no extrarto e deixar no carrinho também
+                                            produto_remover = (cardapio[int(produto)][1])
 
-                                    # Pegar o valor do produto escolhido a partir da lista contendo os valores dos produtos, sendo que o índice na lista se refere ao código do alimento no cardápio
-                                    valor_produto = valores[int(produto)]
+                                            # Pegar o valor do produto escolhido a partir da lista contendo os valores dos produtos, sendo que o índice na lista se refere ao código do alimento no cardápio
+                                            valor_produto = valores[int(produto)]
 
-                                    # Valor total de um único produto adicionado no arrinho
-                                    # Aqui está sendo calculado o valor total que será acrescentado no carrinho, em que pegamos o valor do produto e multiplicamos pela quantidade que será inserida no carrinho
-                                    valor_total_produto = valor_produto * \
-                                        int(quantidade_escolhida)
+                                            
+                                            # Aqui está sendo calculado o valor total que será removido do carrinho, em que pegamos o valor do produto e multiplicamos pela quantidade que será inserida no carrinho
+                                            valor_total_produto = valor_produto * \
+                                                int(quantidade_escolhida)
 
-                                    conta -= valor_total_produto  # Atualiza o valor da conta
+                                            conta -= valor_total_produto  # Atualiza o valor da conta
 
-                                    # Usei vários write para que se tenha a formatação correta
-                                    carrinho.write('%2s' % quantidade_escolhida)
-                                    carrinho.write('%2s' % ('-'))
-                                    carrinho.write('%20s' % produto_remover)
-                                    carrinho.write('%2s' % ('-'))
-                                    carrinho.write('%20s' % ('Preco unitario:'))
-                                    carrinho.write('%6.2f' % valor_produto)
-                                    carrinho.write('%10s' % ('Valor: '))
-                                    carrinho.write('%3s' % ('-'))
-                                    carrinho.write('%6.2f' % valor_total_produto)
-                                    carrinho.write('%10s' %
-                                                ('Código: %s' % (produto)))
-                                    carrinho.write('%10s\n' % ('- Cancelado'))
+                                            # Usei vários write para que se tenha a formatação correta
+                                            carrinho.write('%2s' % quantidade_escolhida)
+                                            carrinho.write('%2s' % ('-'))
+                                            carrinho.write('%20s' % produto_remover)
+                                            carrinho.write('%2s' % ('-'))
+                                            carrinho.write('%20s' % ('Preco unitario:'))
+                                            carrinho.write('%6.2f' % valor_produto)
+                                            carrinho.write('%10s' % ('Valor: '))
+                                            carrinho.write('%3s' % ('-'))
+                                            carrinho.write('%6.2f' % valor_total_produto)
+                                            carrinho.write('%10s' %
+                                                        ('Código: %s' % (produto)))
+                                            carrinho.write('%10s\n' % ('- Cancelado')) #Acrescenta que foi cancelado!
 
-                                    carrinho.close()
+                                            carrinho.close()
 
-                                    # --------------------------------------------------------------------------------Atualizadno conta e qunatidades no carrinho!
+                                            # --------------------------------------------------------------------------------Atualizadno conta e qunatidades no carrinho!
 
-                                    # Transforma em string novamente a lista qunatidades
-                                    quantidades_string = ''
-                                    for elemento in quantidades:
-                                        quantidades_string += str(elemento) + ' '
+                                            # Transforma em string novamente a lista qunatidades
+                                            quantidades_string = ''
+                                            for elemento in quantidades:
+                                                quantidades_string += str(elemento) + ' '
 
-                                    carrinho = open('{}.txt' .format(cpf), 'r')
-                                    carrinho_linhas = carrinho.readlines()
-                                    carrinho.close()
+                                            carrinho = open('{}.txt' .format(cpf), 'r')
+                                            carrinho_linhas = carrinho.readlines()
+                                            carrinho.close()
 
-                                    # Volta a conta para o tipo string e com o \n na lista do cadastro
-                                    carrinho_linhas[0] = str(conta) + '\n'
-                                    # Adiciona com \n na lista do cadastro
-                                    carrinho_linhas[1] = quantidades_string + '\n'
+                                            # Volta a conta para o tipo string e com o \n na lista do cadastro
+                                            carrinho_linhas[0] = str(conta) + '\n'
+                                            # Adiciona com \n na lista do cadastro
+                                            carrinho_linhas[1] = quantidades_string + '\n'
 
-                                    carrinho_update = open(
-                                        '{}.txt' .format(cpf), 'w')
-                                    # Reescreve o arquivo inteiro mas com o valor da conta atualizado
-                                    for elemento in carrinho_linhas:
-                                        carrinho_update.write(elemento)
+                                            carrinho_update = open(
+                                                '{}.txt' .format(cpf), 'w')
+                                            # Reescreve o arquivo inteiro mas com o valor da conta atualizado
+                                            for elemento in carrinho_linhas:
+                                                carrinho_update.write(elemento)
 
-                                    carrinho_update.close()
+                                            carrinho_update.close()
 
+                                            break
+                                        except:
+                                            print('Digite uma quantidade válida para ser removida!')
                                     break
 
-                    elif (produto == 'voltar'):
+                    elif (produto == 'v'):
                         clear()
                         break
 
