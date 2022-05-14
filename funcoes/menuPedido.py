@@ -1,25 +1,25 @@
 from funcoes.br import br
 import os
-
+#OBS: aqui eu usei duas ferramentas para controlar o valor da conta e a quantidade - Assim que é criado o pedido ele adiciona nas duas primeiras linhas um "0\n" e uma string "- 0 0 0 0 0 0 0\n", essas duas strings representam respectivamente o valor da conta e a lista sobre a quantidade de itens no carrinho: a conta é um valor que toda vez que algo é adicionado ou removido do carrinho é necessário pegar esse valor, tirar o \n e então transformar em float e depois reescrever o arquivo; e o segundo é uma string que toda vez que algo é adicionado ou removido eu mudo os valores de cada 0 a partir do código do produto no menu, já que como comeca no indice 1 ele segue o mesmo do menu, então eu tiro o \n e uso o metodo split() dando split no ' ' (espaço), transformando em lista e após mudar eu reescrevo no arquivo, transformando em uma string primeiramente.
 
 def menuPedido(cpf):  # Função para criar um novo novoPedido que possui como argumento a string do cpf do cliente
     clear = lambda: os.system('cls')
     clear()
-    try:
+    try: #Ele tenta abrir o pedido do usuário, caso já exista ele irá pegar os valores 
         carrinho = open('{}.txt' .format(cpf), 'r')
         carrinho_linhas = carrinho.readlines()
         # tira o \n e transforma a conta em float
-        conta = float(carrinho_linhas[0].strip("\n"))
+        conta = float(carrinho_linhas[0].strip("\n")) #Transforma a string da conta em float novamente sem o \n
         quantidades = (carrinho_linhas[1].strip('\n')).split(
-            ' ')  # Transforma em lista a string
+            ' ')  # Transforma em lista a string das quantidades, tirando o \n
         carrinho.close()
 
-    except:
+    except: #Caso não exista ainda um pedido, ele cria um arquivo, além de criar os valores da conta e das quantidades
         carrinho = open('{}.txt' .format(cpf), 'a')
         conta = 0
         quantidades = '- 0 0 0 0 0 0 0'
         carrinho.write('%.2f\n%s\n' % (conta, quantidades))
-        quantidades = (quantidades.strip('\n')).split(' ')
+        quantidades = quantidades.split(' ')
         carrinho.close()
 
     carrinho = open('{}.txt' .format(cpf), 'a')
@@ -54,7 +54,7 @@ def menuPedido(cpf):  # Função para criar um novo novoPedido que possui como a
         br(1)  # Quebra de 2 linhas
 
         # Pergunta qual item ele quer adicionar no carrinho e caso não queira adicionar mais nada é informado que precisa digitar "0"
-        pedido = input('Qual item gostaria de adicionar ao seu carrinho? \nDigite o número referente ao código do alimento ou "0" caso não deseje adicionar mais nenhum item ao carrinho: \n ')
+        pedido = input('Qual item gostaria de adicionar ao seu carrinho? \nDigite o número referente ao código do alimento ou "0" caso não deseje adicionar mais nenhum item ao carrinho\n\nDigite sua resposta aqui: ')
         br(1)
 
         # Verifica se a variável "pedido" recebeu um desses valores
@@ -106,7 +106,7 @@ def menuPedido(cpf):  # Função para criar um novo novoPedido que possui como a
             br(1)
 
 
-    # --------------------------------------------------------------------------------Atualizadno conta e qunatidades no carrinho!
+    #Atualizadno conta e qunatidades no carrinho!
 
     # Transforma em string novamente a lista qunatidades
     quantidades_string = ''
@@ -129,4 +129,15 @@ def menuPedido(cpf):  # Função para criar um novo novoPedido que possui como a
 
     carrinho_update.close()
 
+    #--------------------------------------------------------
+    #Caso o usuário não tenha adicionado nada no carrinho, o carrinho ficará vazio mas o pedido ainda existirá, então para não ter esse problema,ele irá verificar se ele está vazio e se estiver ele irá apagar o pedido
+    verifica = carrinho = open('{}.txt' .format(cpf), 'r')
+    verifica_linhas = verifica.readlines()
+    verifica.close()
+    if len(verifica_linhas) < 3:
+            os.remove("{}.txt" .format(cpf))
+    #--------------------------------------------------------
+
     clear()
+
+    

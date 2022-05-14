@@ -22,7 +22,7 @@ def valorPagar():
                     pedido_linhas = pedido.readlines()
                     pedido.close()
 
-                    conta = pedido_linhas[0].strip('\n')
+                    conta = pedido_linhas[0].strip('\n') #Pega dentro da lista com as linhas do arquivo o valor da conta
 
                     print('###############################')
                     print('Valor a se pagar: R$%s' %conta)

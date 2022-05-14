@@ -51,6 +51,7 @@ def removerProduto():
                     for i in range(2, len(carrinho_linhas)):
                         print(carrinho_linhas[i])
 
+                        
                     carrinho = open('{}.txt' .format(cpf), 'a')
 
                     #Pergunta qual produto quer remover a partir do codigo, e caso a pessoa desista ela pode esrever "v" para voltar
@@ -88,6 +89,7 @@ def removerProduto():
                                 else:
                                     while True:
                                         try:
+                                            clear()
                                             quantidades[int(produto)] = (
                                                 int(quantidades[int(produto)]) - int(quantidade_escolhida))
 
@@ -119,7 +121,7 @@ def removerProduto():
                                             carrinho.write('%10s\n' % ('- Cancelado')) #Acrescenta que foi cancelado!
 
                                             carrinho.close()
-
+                                            
                                             # --------------------------------------------------------------------------------Atualizadno conta e qunatidades no carrinho!
 
                                             # Transforma em string novamente a lista qunatidades
@@ -146,21 +148,22 @@ def removerProduto():
 
                                             break
                                         except:
+                                            clear()
                                             print('Digite uma quantidade válida para ser removida!')
                                     break
 
-                    elif (produto == 'v'):
+                    elif (produto == 'v'): #Caso queira voltar
                         clear()
                         break
 
-                    else:
+                    else: #Caso digite algum valor diferente dos aceitos
                         clear()
                         print('Código de produto inválido! Digite novamente!')
                         br(1)
-            except:
+            except: #Caso não consiga abrir o arquivo
                 print('Não há registros de pedido com esse CPF!')
 
-        else:
+        else:#Caso o login não seja feito com sucesso
             clear()
             print('Cadastro não encontrado ou digitado incorretamente!')
             br(1)
