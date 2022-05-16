@@ -1,0 +1,7 @@
+27.0
+- 0 1 0 0 0 1 2  
+ 1 -            X-salada -     Preco unitario: 10.00   Valor:   + 10.00 Código: 1
+ 1 -            X-burger -     Preco unitario: 10.00   Valor:   + 10.00 Código: 2
+ 1 -        Refrigerante -     Preco unitario:  4.50   Valor:   +  4.50 Código: 6
+ 2 -        Suco natural -     Preco unitario:  6.25   Valor:   + 12.50 Código: 7
+ 1 -            X-salada -     Preco unitario: 10.00   Valor:   - 10.00 Código: 1- Cancelado

@@ -18,9 +18,10 @@ def cancelaPedido():
             if verificacao_bool == True:
                 try: #Tenta apagar o arquivo usando o os.remove()
                     os.remove("{}.txt" .format(cpf))
-                    os.remove("extrato_{}.txt" .format(cpf))
                     print("Pedido cancelado com sucesso! Obrigado!")
                     br()
+                    back = input('Aperte enter para voltar ao menu!')
+                    clear()
                     break
                 except:#Se não conseguir deletar, significa que não há pedidos com esse cpf, por tanto irá informar isso ao usuário
                     clear()
@@ -32,7 +33,7 @@ def cancelaPedido():
                 print('CPF digitado incorretamente ou não cadastrado')
                 br(1)
                 break
-                
+            break
 
         elif deletar == '0': #Caso queira voltar ao menu
             clear()

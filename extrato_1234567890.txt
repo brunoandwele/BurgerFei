@@ -1,0 +1,10 @@
+Nome: Joao
+CPF: 1234567890
+Total: R$ 27.0
+Data: 2022/05/15 21:03
+Itens do pedido:
+ 1 -            X-salada -     Preco unitario: 10.00   Valor:   + 10.00 Codigo: 1
+ 1 -            X-burger -     Preco unitario: 10.00   Valor:   + 10.00 Codigo: 2
+ 1 -        Refrigerante -     Preco unitario:  4.50   Valor:   +  4.50 Codigo: 6
+ 2 -        Suco natural -     Preco unitario:  6.25   Valor:   + 12.50 Codigo: 7
+ 1 -            X-salada -     Preco unitario: 10.00   Valor:   - 10.00 Codigo: 1- Cancelado

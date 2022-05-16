@@ -1,3 +1,0 @@
-20
-- 2 0 0 0 0 0 0 
- 2 -            X-salada -     Preco unitario: 10.00   Valor:   + 20.00 C�digo: 1

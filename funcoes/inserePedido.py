@@ -11,7 +11,21 @@ def inserePedido():  # Ele irá tentar fazer o login do cliente, se não tiver o
     cpf, verificacao_bool = verificacao()
 
     if verificacao_bool == True:
-        menuPedido(cpf)
+        try: #Tenta ver se já tem um pedido criado ou não, caso já tenha, irá para a função menu pedido
+            arquivo = open('{}.txt' .format(cpf),'r')
+            arquivo.close()
+            pedido = True #Variável para saber se tem ou não um pedido já iniciado
+            
+        except:#Caso não tenha um pedido iniciado, informa que precisará ir para a função "novoPedido"
+            pedido = False
+
+        if pedido:
+            menuPedido(cpf)
+        
+        else:
+            clear()
+            print('Pedido não iniciado ainda, para criar um novo pedido use a opção "Novo Pedido"')
+            br(1)
 
     else:  # Caso o CPF não esteja no arquivo de cadastros - irá informar que o cliente precisa realizar cadastro!
         clear()

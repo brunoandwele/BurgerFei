@@ -71,28 +71,30 @@ def menuPedido(cpf):  # Função para criar um novo novoPedido que possui como a
                 input('Quantidade a ser adicionada no carrinho: \n'))
             br(1)
             clear()
+            if quantidade_escolhida < 0:
+                print('Quantiade inválida!')
+            else:
+                # Atualiza a quantidade do produto adicionado na lista quantidade!
+                quantidades[int(pedido)] = int(
+                    quantidades[int(pedido)]) + quantidade_escolhida
 
-            # Atualiza a quantidade do produto adicionado na lista quantidade!
-            quantidades[int(pedido)] = int(
-                quantidades[int(pedido)]) + quantidade_escolhida
+                # Valor total de um único produto adicionado no arrinho
+                # Aqui está sendo calculado o valor total que será acrescentado no carrinho, em que pegamos o valor do produto e multiplicamos pela quantidade que será inserida no carrinho
+                valor_total_produto = valor_produto * quantidade_escolhida
 
-            # Valor total de um único produto adicionado no arrinho
-            # Aqui está sendo calculado o valor total que será acrescentado no carrinho, em que pegamos o valor do produto e multiplicamos pela quantidade que será inserida no carrinho
-            valor_total_produto = valor_produto * quantidade_escolhida
+                conta += valor_total_produto  # Atualiza o valor da conta
 
-            conta += valor_total_produto  # Atualiza o valor da conta
-
-            # Usei vários write para que se tenha a formatação correta
-            carrinho.write('%2i' % quantidade_escolhida)
-            carrinho.write('%2s' % ('-'))
-            carrinho.write('%20s' % produto)
-            carrinho.write('%2s' % ('-'))
-            carrinho.write('%20s' % ('Preco unitario:'))
-            carrinho.write('%6.2f' % valor_produto)
-            carrinho.write('%10s' % ('Valor: '))
-            carrinho.write('%3s' % ('+'))
-            carrinho.write('%6.2f' % valor_total_produto)
-            carrinho.write('%10s\n' % ('Código: %s' % (pedido)))
+                # Usei vários write para que se tenha a formatação correta
+                carrinho.write('%2i' % quantidade_escolhida)
+                carrinho.write('%2s' % ('-'))
+                carrinho.write('%20s' % produto)
+                carrinho.write('%2s' % ('-'))
+                carrinho.write('%20s' % ('Preco unitario:'))
+                carrinho.write('%6.2f' % valor_produto)
+                carrinho.write('%10s' % ('Valor: '))
+                carrinho.write('%3s' % ('+'))
+                carrinho.write('%6.2f' % valor_total_produto)
+                carrinho.write('%10s\n' % ('Código: %s' % (pedido)))
 
         elif pedido == '0':  # Se o cliente declarar "0" como resposta do input, significa que ele não quer adicionar mais nada no carrinho
 
