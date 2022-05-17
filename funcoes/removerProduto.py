@@ -6,8 +6,6 @@ import os
 def removerProduto():
     clear = lambda: os.system('cls') #Cria a função para limpar o console
     clear()
-    print('Para remover um produto é necessário informar novamente o cpf e a senha!')
-    br(1)
 
     #Para remover usei um método muito parecido com o de inserir produto e do novo pedido, por tanto para adicionar no carrinho que um pedido foi cancelado eu precisei do cardápio e da lista dos precos para poder adicionar no arquivo, já que eu me baseei totalemente nessas duas listas com seus elementos para fazer isso!
 
@@ -36,6 +34,7 @@ def removerProduto():
             conta = float(carrinho_linhas[0].strip('\n')) #Pega o valor da conta e transforma e float novamente tirando o \n
             quantidades = (carrinho_linhas[1].strip('\n')).split(' ') #Pega o valor das quantidades e tira o \n e depois transforma em lista novamente
             carrinho.close()
+
             clear()
             while True:
                 
@@ -156,7 +155,9 @@ def removerProduto():
                     print('Código de produto inválido! Digite novamente!')
                     br(1)
         except: #Caso não consiga abrir o arquivo
+            clear()
             print('Não há registros de pedido com esse CPF!')
+            br(1)
 
     else:#Caso o login não seja feito com sucesso
         clear()

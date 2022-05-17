@@ -23,27 +23,36 @@ def main():
     clear = lambda: os.system('cls') #Cria a função para limpar o console
     clear()
     # Apenas "abro" o arquivo cadastro para garantir que ele exista(Se existir nada acontecerá,caso não exista ele irá criar um arquivo vazio com o nome "cadastro.txt")
+    
     cadastro = open('cadastro.txt', 'a')
     cadastro.close()
 
     while True:
+
         opcao = input(
             '1 - Novo Pedido \n2 - Cancela Pedido \n3 - Insere produto \n4 - Cancela Produto \n5 - Valor do pedido \n6 - Extrato \n\n0 - Sair \n\nDigite sua opção:')
 
         if opcao == '1':
-            novoPedido()  # Chama a função novo pedido e retorna o valor do nome,cpf e conta atualizada
+            novoPedido()
+
         elif opcao == '2':
             cancelaPedido()
+
         elif opcao == '3':
-            inserePedido()  # Chama a função inserePedido e retorna os valores do nome, cpf e conta atualiada
+            inserePedido()  
+
         elif opcao == '4':
             removerProduto()
+
         elif opcao == '5':
             valorPagar()
+
         elif opcao == '6':
             extrato()
+
         elif opcao == '0':
             break
+
         else:
             clear()
             print('Insira uma opção válida') #Se digitar algum valor que não seja um desses, ele irá falar para inserir um valor válido;

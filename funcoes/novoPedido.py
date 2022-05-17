@@ -15,13 +15,13 @@ def novoPedido():  # Função para criar um cadastro - será chamada dentro da f
     # Coletar o cpf do usuário
     cpf = input('Digite seu CPF (apenas dígitos):\n')
 
-    if (cpf + '\n') in cadastro_linhas:
+    if (cpf + '\n') in cadastro_linhas: #Verifica se o cpf esta cadastrado, se estiver ele ira pegar o indice da senha para poder acessar ela e comparar com a digitada pelo usuario
         index_senha = cadastro_linhas.index(cpf + '\n') + 1
         clear()
         while True:
             senha = input('CPF já cadastrado\nInforme a sua senha: ')
             if (senha + '\n') == cadastro_linhas[index_senha]:
-                try: 
+                try:  #Tenta abrir o arquivo, se conseguir ele irá informar que um pedido já está ativo, então irá perguntar se ele irá querer manter ou criar um novo pedido!
                     clear()
                     while True:
                         carrinho = open('{}.txt' .format(cpf), 'r')
@@ -48,14 +48,15 @@ def novoPedido():  # Função para criar um cadastro - será chamada dentro da f
                             print('Insira uma opção válida!')
                     
 
-                except:
+                except:#Se não tiver um pedido ativo ele irá para a função menuPedido
                     menuPedido(cpf)
                 break
+
             else:
                 clear()
                 print('Senha incorreta!Tente novamente!')
 
-    else:
+    else: #Se não tiver o cpf dentro do arquivo, ele irá pedir o nome e depois a nova senha do usuário para poder cadastra-lo
         clear()
         # Coletar o nome do usuário
         nome = input('Digite seu nome completo:\n')

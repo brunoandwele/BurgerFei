@@ -22,7 +22,7 @@ def cancelaPedido():
                     br()
                     back = input('Aperte enter para voltar ao menu!')
                     clear()
-                    break
+                    
                 except:#Se não conseguir deletar, significa que não há pedidos com esse cpf, por tanto irá informar isso ao usuário
                     clear()
                     print('Pedido não encontrado! Pedido já deletado ou não iniciado!')
@@ -32,7 +32,7 @@ def cancelaPedido():
                 clear()
                 print('CPF digitado incorretamente ou não cadastrado')
                 br(1)
-                break
+                
             break
 
         elif deletar == '0': #Caso queira voltar ao menu

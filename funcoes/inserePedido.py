@@ -19,10 +19,10 @@ def inserePedido():  # Ele irá tentar fazer o login do cliente, se não tiver o
         except:#Caso não tenha um pedido iniciado, informa que precisará ir para a função "novoPedido"
             pedido = False
 
-        if pedido:
+        if pedido: #Se já tiver um pedido criardo ele irá chamar a função menuPedido
             menuPedido(cpf)
         
-        else:
+        else: #Caso contrário ele irá informar que um pedido deve ser criado!
             clear()
             print('Pedido não iniciado ainda, para criar um novo pedido use a opção "Novo Pedido"')
             br(1)

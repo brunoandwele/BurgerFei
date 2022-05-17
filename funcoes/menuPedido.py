@@ -71,8 +71,10 @@ def menuPedido(cpf):  # Função para criar um novo novoPedido que possui como a
                 input('Quantidade a ser adicionada no carrinho: \n'))
             br(1)
             clear()
-            if quantidade_escolhida < 0:
+            if quantidade_escolhida <= 0:
+                clear()
                 print('Quantiade inválida!')
+                br(1)
             else:
                 # Atualiza a quantidade do produto adicionado na lista quantidade!
                 quantidades[int(pedido)] = int(

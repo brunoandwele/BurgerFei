@@ -1,5 +1,0 @@
-20
-- 2 0 0 0 0 0 0 
- 0 -            X-salada -     Preco unitario: 10.00   Valor:   +  0.00 Código: 1
- 0 -            X-salada -     Preco unitario: 10.00   Valor:   +  0.00 Código: 1
- 2 -            X-salada -     Preco unitario: 10.00   Valor:   + 20.00 Código: 1

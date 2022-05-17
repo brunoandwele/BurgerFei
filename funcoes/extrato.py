@@ -63,7 +63,7 @@ def extrato():
             
         except:#Caso não encontre o arquivo do pedido com o respectivo cpf
             clear()
-            print('Não há registro de pedidos com esse cpf!')
+            print('Não há registro de pedidos com esse CPF!')
             br(1)
 
     else:#Caso não tenha realizado o login com sucesso
